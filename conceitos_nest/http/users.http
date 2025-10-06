@@ -1,0 +1,44 @@
+#Variables
+@baseUrl = http://localhost:3000
+
+# Get all users
+# @name getUsers
+GET {{baseUrl}}/users
+
+###
+
+# Get user by id
+# @name getUser
+GET {{baseUrl}}/users/1
+
+###
+
+# Create user
+# @name createUser
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "name": "Carlos Eduardo M Gomes",
+    "email": "cemg@gmail.com",
+    "password": "secret_key"
+}
+
+###
+
+# Update user
+# @name updateUser
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+    "name": "Carlos Eduardo M G",
+    "email": "cemg_updated@gmail.com",
+    "password": "secret_key_updated"
+}
+
+###
+
+# Delete user
+# @name deleteUser
+DELETE {{baseUrl}}/users/1
