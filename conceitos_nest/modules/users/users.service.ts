@@ -1,53 +1,50 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'entities/user.entity';
+import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create.user';
 import { UpdateUserDto } from './dto/update.user';
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
 @Injectable()
 export class UsersService {
-  private users: User[] = [];
-  private id = 0;
+  constructor(
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
 
-  findAll() {
-    return this.users;
+  async create(body: CreateUserDto) {
+    const newUser = this.usersRepository.create(body);
+    const user = await this.usersRepository.save(newUser);
+
+    return `User created: ${JSON.stringify(user)}`;
   }
 
-  findOne(id: number) {
-    const user = this.users.find((user) => user.id === id);
+  async findAll() {
+    const users = await this.usersRepository.find();
+    return users;
+  }
+
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
     return `User #${id}: ${JSON.stringify(user)}`;
   }
 
-  create(body: CreateUserDto) {
-    this.id++;
-    this.users.push({ ...body, id: this.id });
+  async update(id: number, body: UpdateUserDto) {
+    const updatedUser = await this.usersRepository.preload({ id, ...body });
+    if (!updatedUser)
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
-    return `User created: ${JSON.stringify(body)}`;
+    const user = await this.usersRepository.save(updatedUser);
+
+    return `User #${id} updated: ${JSON.stringify(user)}`;
   }
 
-  update(id: number, body: UpdateUserDto) {
-    const user = this.users.find((user) => user.id === id);
+  async remove(id: number) {
+    const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
-    this.users = this.users.map((user) => {
-      if (user.id === id) return { ...user, ...body };
-      return user;
-    });
-
-    return `User #${id} updated: ${JSON.stringify(body)}`;
-  }
-
-  remove(id: number) {
-    const user = this.users.find((user) => user.id === id);
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-
-    this.users = this.users.filter((user) => user.id !== Number(id));
+    await this.usersRepository.remove(user);
 
     return `User #${id} deleted.`;
   }
