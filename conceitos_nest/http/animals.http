@@ -1,0 +1,44 @@
+#Variables
+@baseUrl = http://localhost:3000
+
+# Get all animals
+# @name getAnimals
+GET {{baseUrl}}/animals
+
+###
+
+# Get animal by id
+# @name getAnimal
+GET {{baseUrl}}/animals/1
+
+###
+
+# Create animal
+# @name createAnimal
+POST {{baseUrl}}/animals
+Content-Type: application/json
+
+{
+    "name": "crocodilo",
+    "specie": "azul amazônico",
+    "age": 12
+}
+
+###
+
+# Update animal
+# @name updateAnimal
+PUT {{baseUrl}}/animals/1
+Content-Type: application/json
+
+{
+    "name": "crocodilo",
+    "specie": "gigante amazônico",
+    "age": 20
+}
+
+###
+
+# Delete animal
+# @name deleteAnimal
+DELETE {{baseUrl}}/animals/1
