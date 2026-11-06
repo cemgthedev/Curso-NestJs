@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ErrorHandlingInterceptor } from 'common/interceptors/error-hanling.interceptor';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -11,6 +12,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.useGlobalInterceptors(new ErrorHandlingInterceptor());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
