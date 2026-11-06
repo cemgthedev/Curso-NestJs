@@ -73,7 +73,7 @@ GET {{baseUrl}}/{{endpoint}}
 
 # Get products with pagination
 # @name getProductsWithPagination
-GET {{baseUrl}}/{{endpoint}}?limit=2&page=1
+GET {{baseUrl}}/{{endpoint}}?limit=2&page=dsd
 
 ###
 
