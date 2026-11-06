@@ -1,0 +1,118 @@
+# Variables
+@baseUrl = http://localhost:3000
+@endpoint = skills
+@skillId = 1
+
+### CREATE
+
+# Create skill 1
+# @name createSkill
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "name": "JavaScript",
+  "level": "Advanced"
+}
+
+###
+
+# Create skill 2
+# @name createSkill2
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "name": "Python",
+  "level": "Intermediate"
+}
+
+###
+
+# Create skill 3
+# @name createSkill3
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "name": "React",
+  "level": "Advanced"
+}
+
+### READ
+
+# Get all skills
+# @name getSkills
+GET {{baseUrl}}/{{endpoint}}
+
+###
+
+# Get skill by ID
+# @name getSkillById
+GET {{baseUrl}}/{{endpoint}}/{{skillId}}
+
+### QUERY
+
+# Filter skills by ID
+# @name queryById
+GET {{baseUrl}}/{{endpoint}}/query?id=1
+
+###
+
+# Filter skills by title
+# @name queryByTitle
+GET {{baseUrl}}/{{endpoint}}/query?title=JavaScript
+
+###
+
+# Filter skills by level
+# @name queryByLevel
+GET {{baseUrl}}/{{endpoint}}/query?level=Advanced
+
+###
+
+# Filter skills by title and level
+# @name queryByTitleAndLevel
+GET {{baseUrl}}/{{endpoint}}/query?title=Python&level=Intermediate
+
+### UPDATE
+
+# Update skill name
+# @name updateSkillName
+PUT {{baseUrl}}/{{endpoint}}/{{skillId}}
+Content-Type: application/json
+
+{
+  "name": "JavaScript ES6"
+}
+
+###
+
+# Update skill level
+# @name updateSkillLevel
+PUT {{baseUrl}}/{{endpoint}}/{{skillId}}
+Content-Type: application/json
+
+{
+  "level": "Expert"
+}
+
+###
+
+# Update multiple skill fields
+# @name updateSkill
+PUT {{baseUrl}}/{{endpoint}}/{{skillId}}
+Content-Type: application/json
+
+{
+  "name": "JavaScript ES6",
+  "level": "Expert"
+}
+
+###
+
+### DELETE
+
+# Delete skill
+# @name deleteSkill
+DELETE {{baseUrl}}/{{endpoint}}/{{skillId}}
