@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { UrlParam } from 'common/params/url-param.decorator';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { MessagesService } from './messages.service';
@@ -27,7 +28,8 @@ export class MessagesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number, @UrlParam() url: string) {
+    console.log('Url: ', url);
     return this.messagesService.findOne(id);
   }
 

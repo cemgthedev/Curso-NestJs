@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MyExceptionFilter } from 'common/filters/my-exception.filter';
+import { IsAdminGuard } from 'common/guards/is-admin.guard';
 import { ErrorHandlingInterceptor } from 'common/interceptors/error-hanling.interceptor';
 import { AppModule } from './app.module';
 
@@ -15,6 +16,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ErrorHandlingInterceptor());
   app.useGlobalFilters(new MyExceptionFilter());
+  app.useGlobalGuards(new IsAdminGuard());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
