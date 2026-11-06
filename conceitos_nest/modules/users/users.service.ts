@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entities/user.entity';
 import { Repository } from 'typeorm';
@@ -19,13 +19,19 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.usersRepository.find();
+    const users = await this.usersRepository.find({
+      relations: ['sentMessages', 'receivedMessages'],
+      order: { createdAt: 'DESC' },
+    });
     return users;
   }
 
   async findOne(id: number) {
-    const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['sentMessages', 'receivedMessages'],
+    });
+    if (!user) throw new NotFoundException(`User with id ${id} not found`);
 
     return `User #${id}: ${JSON.stringify(user)}`;
   }
@@ -33,7 +39,7 @@ export class UsersService {
   async update(id: number, body: UpdateUserDto) {
     const updatedUser = await this.usersRepository.preload({ id, ...body });
     if (!updatedUser)
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException(`User with id ${id} not found`);
 
     const user = await this.usersRepository.save(updatedUser);
 
@@ -42,7 +48,7 @@ export class UsersService {
 
   async remove(id: number) {
     const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user) throw new NotFoundException(`User with id ${id} not found`);
 
     await this.usersRepository.remove(user);
 

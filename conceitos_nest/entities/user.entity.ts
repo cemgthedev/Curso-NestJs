@@ -1,27 +1,35 @@
+import { Message } from 'entities/message.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  name: string;
+  name!: string;
 
   @Column({ type: 'varchar' })
-  email: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 20 })
-  password: string;
+  password!: string;
+
+  @OneToMany(() => Message, (message) => message.from)
+  sentMessages?: Message[];
+
+  @OneToMany(() => Message, (message) => message.to)
+  receivedMessages?: Message[];
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @CreateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 }

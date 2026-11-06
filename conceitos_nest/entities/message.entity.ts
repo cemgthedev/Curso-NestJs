@@ -1,25 +1,47 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsPositive } from 'class-validator';
+import { User } from 'entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Message {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  title: string;
+  title!: string;
 
   @Column({ type: 'varchar', length: 300 })
-  content: string;
+  content!: string;
 
-  @Column({ type: 'varchar', length: 20 })
-  from: string;
+  @IsPositive()
+  @Column({ type: 'int', nullable: false })
+  fromId!: number;
 
-  @Column({ type: 'varchar', length: 20 })
-  to: string;
+  @ManyToOne(() => User, (user) => user.id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  from?: User;
+
+  @IsPositive()
+  @Column({ type: 'int', nullable: false })
+  toId!: number;
+
+  @ManyToOne(() => User, (user) => user.id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  to?: User;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @CreateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 }

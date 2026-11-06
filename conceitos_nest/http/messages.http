@@ -1,0 +1,100 @@
+# Variables
+@baseUrl = http://localhost:3000
+@endpoint = messages
+@messageId = 1
+@fromId = 1
+@toId = 2
+
+### CREATE
+
+# Create message 1
+# @name createMessage
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "Hello!",
+  "content": "Hey! How are you doing?",
+  "fromId": {{fromId}},
+  "toId": {{toId}}
+}
+
+###
+
+# Create message 2
+# @name createMessage2
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "Project discussion",
+  "content": "I would like to discuss our new project.",
+  "fromId": {{toId}},
+  "toId": {{fromId}}
+}
+
+###
+
+# Create message 3
+# @name createMessage3
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "Meeting reminder",
+  "content": "Don't forget our meeting tomorrow at 10 AM.",
+  "fromId": {{fromId}},
+  "toId": {{toId}}
+}
+
+### READ
+
+# Get all messages
+# @name getMessages
+GET {{baseUrl}}/{{endpoint}}
+
+###
+
+# Get message by ID
+# @name getMessageById
+GET {{baseUrl}}/{{endpoint}}/{{messageId}}
+
+### UPDATE
+
+# Update message title
+# @name updateMessageTitle
+PATCH {{baseUrl}}/{{endpoint}}/{{messageId}}
+Content-Type: application/json
+
+{
+  "title": "Updated message title"
+}
+
+###
+
+# Update message content
+# @name updateMessageContent
+PATCH {{baseUrl}}/{{endpoint}}/{{messageId}}
+Content-Type: application/json
+
+{
+  "content": "This is the updated message content."
+}
+
+###
+
+# Update multiple message fields
+# @name updateMessage
+PATCH {{baseUrl}}/{{endpoint}}/{{messageId}}
+Content-Type: application/json
+
+{
+  "title": "Important update",
+  "content": "The meeting has been rescheduled to 2 PM."
+}
+
+### DELETE
+
+# Delete message
+# @name deleteMessage
+DELETE {{baseUrl}}/{{endpoint}}/{{messageId}}
