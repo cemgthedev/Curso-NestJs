@@ -19,12 +19,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
-  }
-
-  @Get('query')
-  query(@Query() options: QueryProductDto) {
+  findAll(@Query() options: QueryProductDto) {
     return this.productsService.query(options);
   }
 

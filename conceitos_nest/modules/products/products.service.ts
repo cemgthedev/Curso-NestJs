@@ -55,8 +55,10 @@ export class ProductsService {
     return product;
   }
 
-  async query(options: QueryProductDto): Promise<Product[]> {
-    const { id, title, minPrice, maxPrice } = options;
+  async query(
+    options: QueryProductDto,
+  ): Promise<{ data: Product[]; total: number; limit: number; page: number }> {
+    const { id, title, minPrice, maxPrice, limit, page } = options;
 
     if (
       minPrice !== undefined &&
@@ -83,7 +85,17 @@ export class ProductsService {
       });
     }
 
-    return queryBuilder.getMany();
+    const [products, total] = await queryBuilder
+      .take(limit ?? 10)
+      .skip((page - 1) * (limit ?? 10))
+      .getManyAndCount();
+
+    return {
+      data: products,
+      total,
+      limit: limit ?? 10,
+      page: page ?? 1,
+    };
   }
 
   async update(id: number, product: UpdateProductDto): Promise<Product> {

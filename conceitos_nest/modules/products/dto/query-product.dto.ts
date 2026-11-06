@@ -1,7 +1,8 @@
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { PaginationDto } from 'common/dto/pagination.dto';
 
-export class QueryProductDto {
+export class QueryProductDto extends PaginationDto {
   @IsNumber()
   @Type(() => Number)
   @IsOptional()
