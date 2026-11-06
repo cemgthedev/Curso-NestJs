@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnimalsModule } from 'modules/animal/animals.module';
+import { ProductModule } from 'modules/products/products.module';
 import { TaskModule } from 'modules/task/task.module';
 import { UsersModule } from 'modules/users/users.module';
 import { MessagesModule } from '../modules/messages/messages.module';
@@ -23,6 +24,7 @@ import { AppService } from './app.service';
     MessagesModule,
     AnimalsModule,
     TaskModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

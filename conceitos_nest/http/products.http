@@ -1,0 +1,177 @@
+# Variables
+@baseUrl = http://localhost:3000
+@endpoint = products
+@productId = 1
+
+### CREATE
+
+# Create product 1
+# @name createProduct
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "iPhone 15 Pro",
+  "description": "Apple smartphone with 256GB storage",
+  "price": 5999.90,
+  "isActive": true,
+  "createdAt": "2026-11-04T10:00:00.000Z"
+}
+
+###
+
+# Create product 2
+# @name createProduct2
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "Samsung Galaxy S25",
+  "description": "Samsung smartphone with 256GB storage",
+  "price": 4999.90,
+  "isActive": true,
+  "createdAt": "2026-11-04T10:00:00.000Z"
+}
+
+###
+
+# Create product 3
+# @name createProduct3
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "MacBook Air M4",
+  "description": "Apple notebook with 16GB RAM",
+  "price": 8999.90,
+  "isActive": true,
+  "createdAt": "2026-11-04T10:00:00.000Z"
+}
+
+###
+
+# Create product 4 (inactive)
+# @name createInactiveProduct
+POST {{baseUrl}}/{{endpoint}}
+Content-Type: application/json
+
+{
+  "title": "Dell Inspiron",
+  "description": "Dell notebook",
+  "price": 3500,
+  "isActive": false,
+  "createdAt": "2026-11-04T10:00:00.000Z"
+}
+
+### READ
+
+# Get all products
+# @name getProducts
+GET {{baseUrl}}/{{endpoint}}
+
+###
+
+# Get product by ID
+# @name getProductById
+GET {{baseUrl}}/{{endpoint}}/{{productId}}
+
+### QUERY
+
+# Filter products by ID
+# @name queryById
+GET {{baseUrl}}/{{endpoint}}/query?id=1
+
+###
+
+# Filter products by minimum price
+# @name queryByMinPrice
+GET {{baseUrl}}/{{endpoint}}/query?minPrice=4000
+
+###
+
+# Filter products by maximum price
+# @name queryByMaxPrice
+GET {{baseUrl}}/{{endpoint}}/query?maxPrice=6000
+
+###
+
+# Filter products by price range
+# @name queryByPriceRange
+GET {{baseUrl}}/{{endpoint}}/query?minPrice=4000&maxPrice=9000
+
+###
+
+# Filter products by title substring
+# @name queryByTitle
+GET {{baseUrl}}/{{endpoint}}/query?title=phone
+
+###
+
+# Filter products by title (case-insensitive)
+# @name queryByTitleInsensitive
+GET {{baseUrl}}/{{endpoint}}/query?title=IPHONE
+
+###
+
+# Combine title and price filters
+# @name queryByTitleAndPrice
+GET {{baseUrl}}/{{endpoint}}/query?title=phone&minPrice=4000&maxPrice=6000
+
+###
+
+# Filter products by title and minimum price
+# @name queryByTitleAndMinPrice
+GET {{baseUrl}}/{{endpoint}}/query?title=MacBook&minPrice=5000
+
+### UPDATE
+
+# Update product title
+# @name updateProductTitle
+PUT {{baseUrl}}/{{endpoint}}/1
+Content-Type: application/json
+
+{
+  "title": "iPhone 16 Pro"
+}
+
+###
+
+# Update product price
+# @name updateProductPrice
+PUT {{baseUrl}}/{{endpoint}}/{{productId}}
+Content-Type: application/json
+
+{
+  "price": 6499.90
+}
+
+###
+
+# Update multiple product fields
+# @name updateProduct
+PUT {{baseUrl}}/{{endpoint}}/{{productId}}
+Content-Type: application/json
+
+{
+  "title": "iPhone 16 Pro Max",
+  "description": "Apple smartphone with 512GB storage",
+  "price": 7499.90,
+  "isActive": true
+}
+
+###
+
+# Deactivate product
+# @name deactivateProduct
+PUT {{baseUrl}}/{{endpoint}}/{{productId}}
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+### DELETE
+
+# Delete product
+# @name deleteProduct
+DELETE {{baseUrl}}/{{endpoint}}/{{productId}}
