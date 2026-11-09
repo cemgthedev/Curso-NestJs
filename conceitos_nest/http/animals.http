@@ -9,7 +9,7 @@ GET {{baseUrl}}/animals
 
 # Get animal by id
 # @name getAnimal
-GET {{baseUrl}}/animals/1
+GET {{baseUrl}}/animals/2
 
 ###
 

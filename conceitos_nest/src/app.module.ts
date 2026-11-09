@@ -4,8 +4,8 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { SimpleMiddleware } from 'common/middlewares/simple.middleware';
+import { DBConnectModule } from 'dinamic/db-connect.module';
 import { AnimalsModule } from 'modules/animal/animals.module';
 import { ProductModule } from 'modules/products/products.module';
 import { SkillsModule } from 'modules/skills/skills.module';
@@ -17,15 +17,8 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      database: 'postgres',
-      username: 'postgres',
-      password: '12345678',
-      autoLoadEntities: true, // carrega as entidades automaticamente
-      synchronize: true, // cria as tabelas automaticamente. obs: não usar em produção
+    DBConnectModule.register({
+      type: 'test',
     }),
     UsersModule,
     MessagesModule,
