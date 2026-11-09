@@ -1,10 +1,16 @@
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import type { RegexProtocol } from 'common/regex/regex-protocol.regex';
+import {
+  ONLY_LOWER_CASE_LETTERS,
+  REMOVE_SPACES,
+} from 'constants/regex.constants';
 import { Message } from 'entities/message.entity';
 import { UsersService } from 'modules/users/users.service';
 import { Repository } from 'typeorm';
@@ -16,6 +22,10 @@ export class MessagesService {
   constructor(
     @InjectRepository(Message) private messageRepository: Repository<Message>,
     private readonly usersService: UsersService,
+    @Inject(REMOVE_SPACES)
+    private readonly removeSpaces: RegexProtocol,
+    @Inject(ONLY_LOWER_CASE_LETTERS)
+    private readonly onlyLowerCaseLetters: RegexProtocol,
   ) {}
 
   async create(createMessageDto: CreateMessageDto) {
@@ -58,6 +68,13 @@ export class MessagesService {
 
     if (!message)
       throw new HttpException('Message not found', HttpStatus.NOT_FOUND);
+
+    console.log('Message content: ', message.content);
+    console.log('Without spaces: ', this.removeSpaces.execute(message.content));
+    console.log(
+      'Only lower case letters: ',
+      this.onlyLowerCaseLetters.execute(message.content),
+    );
 
     return `Message #${id}: ${JSON.stringify(message)}`;
   }

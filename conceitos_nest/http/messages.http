@@ -1,7 +1,7 @@
 # Variables
 @baseUrl = http://localhost:3000
 @endpoint = messages
-@messageId = 1
+@messageId = 6
 @fromId = 2
 @toId = 3
 

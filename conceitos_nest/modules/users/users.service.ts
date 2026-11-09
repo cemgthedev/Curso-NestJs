@@ -55,3 +55,29 @@ export class UsersService {
     return `User #${id} deleted.`;
   }
 }
+
+/**
+ * Exemplo de classe com dados mockados
+ */
+@Injectable()
+export class UsersServiceMock {
+  async create(body: CreateUserDto) {
+    return `User created`;
+  }
+
+  async findAll() {
+    return [];
+  }
+
+  async findOne(id: number) {
+    return `User #${id}`;
+  }
+
+  async update(id: number, body: UpdateUserDto) {
+    return `User #${id} updated: ${JSON.stringify(body)}`;
+  }
+
+  async remove(id: number) {
+    return `User #${id} deleted.`;
+  }
+}
