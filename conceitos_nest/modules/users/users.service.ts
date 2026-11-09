@@ -1,11 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create.user';
 import { UpdateUserDto } from './dto/update.user';
 
-@Injectable()
+/**
+ * Scope.DEFAULT: O provider é instanciado uma vez (padrão singleton)
+ * Scope.REQUEST: O provider é instanciado a cada requisição
+ * Scope.TRANSIENT: O provider é instanciado para cada classe onde foi injetado
+ */
+@Injectable({ scope: Scope.DEFAULT })
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
