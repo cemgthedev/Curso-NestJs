@@ -17,6 +17,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ErrorHandlingInterceptor());
   app.useGlobalFilters(new MyExceptionFilter());
   app.useGlobalGuards(new IsAdminGuard());
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
